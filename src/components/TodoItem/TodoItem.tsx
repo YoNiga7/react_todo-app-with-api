@@ -37,7 +37,7 @@ export const TodoItem: React.FC<Props> = ({
         .then(() => setIsEditing(false))
         .catch(() => {
           editInputRef.current?.focus();
-          setIsEditing(true); // Залишаємо форму відкритою
+          setIsEditing(true);
         });
 
       return;
@@ -47,7 +47,7 @@ export const TodoItem: React.FC<Props> = ({
       .then(() => setIsEditing(false))
       .catch(() => {
         editInputRef.current?.focus();
-        setIsEditing(true); // Залишаємо форму відкритою
+        setIsEditing(true);
       });
   };
 
