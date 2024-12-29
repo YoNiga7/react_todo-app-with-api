@@ -11,18 +11,18 @@ type Props = {
   onDelete: () => void;
 };
 
+const STATUSES = [
+  { key: Status.All, label: 'All', dataCy: 'FilterLinkAll' },
+  { key: Status.Active, label: 'Active', dataCy: 'FilterLinkActive' },
+  {
+    key: Status.Completed,
+    label: 'Completed',
+    dataCy: 'FilterLinkCompleted',
+  },
+];
+
 export const TodoFilter: React.FC<Props> = memo(
   ({ filter, onFilterChange, todos, onDelete }) => {
-    const statuses = [
-      { key: Status.All, label: 'All', dataCy: 'FilterLinkAll' },
-      { key: Status.Active, label: 'Active', dataCy: 'FilterLinkActive' },
-      {
-        key: Status.Completed,
-        label: 'Completed',
-        dataCy: 'FilterLinkCompleted',
-      },
-    ];
-
     const handleLinkClick = (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
       status: Status,
@@ -44,7 +44,7 @@ export const TodoFilter: React.FC<Props> = memo(
         </span>
 
         <nav className="filter" data-cy="Filter">
-          {statuses.map(({ key, label, dataCy }) => (
+          {STATUSES.map(({ key, label, dataCy }) => (
             <a
               key={key}
               href={`#/${key}`}

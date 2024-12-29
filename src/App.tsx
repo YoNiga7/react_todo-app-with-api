@@ -30,6 +30,8 @@ export const App: React.FC = () => {
   const [processingTodos, setProcessingTodos] = useState<number[]>([]);
 
   const addInputRef = useRef<HTMLInputElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const allAreCompleted = useMemo(
     () => todos.every(todo => todo.completed),
     [todos],
@@ -43,7 +45,23 @@ export const App: React.FC = () => {
 
   const handleError = useCallback((error: ErrorType) => {
     setErrorMsg(error);
-    setTimeout(() => setErrorMsg(ErrorType.Default), 3000);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setErrorMsg(ErrorType.Default);
+      timeoutRef.current = null;
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   const onTodoAdd = async (e: React.FormEvent<HTMLFormElement>) => {
